@@ -45,7 +45,7 @@ export const Hero = forwardRef<HTMLDivElement, HeroProps>(
             playsInline
             preload="metadata"
             poster={posterSrc}
-            className="w-full h-full object-cover opacity-85 transition-opacity duration-1000 ease-in-out !h-full !max-w-none"
+            className="w-full h-full object-cover opacity-85 transition-opacity duration-1000 ease-in-out !w-full !h-full !max-w-none !max-h-none"
           >
             <source src={videoSrc} type="video/mp4" />
             Your browser does not support the video tag.

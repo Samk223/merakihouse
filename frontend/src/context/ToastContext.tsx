@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useRef } from "react";
-import { Sparkles } from "lucide-react";
+import { Heart } from "lucide-react";
 
 interface ToastContextType {
   showToast: (message: string) => void;
@@ -40,7 +40,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           }}
         >
           <div className="flex items-center justify-center w-7 h-7 rounded-full bg-[#9D6C76]/10 text-[#9D6C76]">
-            <Sparkles className="w-3.5 h-3.5" />
+            <Heart className="w-3.5 h-3.5 fill-current" />
           </div>
           <span className="font-body text-xs font-bold tracking-wider uppercase text-[#28273F]">
             {toast.message}
