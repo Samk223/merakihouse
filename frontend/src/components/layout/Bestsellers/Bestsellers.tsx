@@ -1,4 +1,7 @@
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
+import { useToast } from "../../../context/ToastContext";
 
 interface ProductCard {
   id: number;
@@ -9,37 +12,37 @@ interface ProductCard {
 
 const bestsellerProducts: ProductCard[] = [
   {
-    id: 1,
+    id: 4,
     name: "Hibiscus Repair Shampoo Bar",
     price: "₹299",
     imageUrl: "/home/bestsellers/hibiscus-shampoo.jpeg",
   },
   {
-    id: 2,
+    id: 7,
     name: "Anti-Frizz Hair Serum",
     price: "₹449",
     imageUrl: "/home/bestsellers/hair-serum.jpeg",
   },
   {
-    id: 3,
+    id: 12,
     name: "Botanical Body Oil",
     price: "₹489",
     imageUrl: "/home/bestsellers/body-oil.jpeg",
   },
   {
-    id: 4,
+    id: 13,
     name: "Sugar Body Scrub",
     price: "₹329",
     imageUrl: "/home/bestsellers/sugar-scrub.jpeg",
   },
   {
-    id: 5,
+    id: 18,
     name: "Room & Linen Mist",
     price: "₹279",
     imageUrl: "/home/bestsellers/linen-mist.jpeg",
   },
   {
-    id: 6,
+    id: 16,
     name: "Soy Candle",
     price: "₹349",
     imageUrl: "/home/bestsellers/soy-candle.jpeg",
@@ -47,6 +50,20 @@ const bestsellerProducts: ProductCard[] = [
 ];
 
 export const Bestsellers: FC = () => {
+  const navigate = useNavigate();
+  const { addToCart, setIsCartOpen } = useCart();
+  const { showToast } = useToast();
+
+  const handleAddToCart = async (productId: number, productName: string) => {
+    try {
+      await addToCart(productId, 1);
+      showToast(`${productName} added to cart!`);
+      setIsCartOpen(true);
+    } catch (error) {
+      console.error("Failed to add to cart:", error);
+      showToast("Failed to add to cart");
+    }
+  };
   return (
     <section className="w-full flex flex-col">
       {/* 1. Smeared Clay Bestsellers Header Banner */}
@@ -142,6 +159,7 @@ export const Bestsellers: FC = () => {
                       {/* Quick View Button */}
                       <button 
                         type="button"
+                        onClick={() => navigate(`/product/${product.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`)}
                         className="flex-grow !py-2 !px-3 !bg-white !text-dark hover:!bg-dark hover:!text-white !font-body !text-[10px] md:!text-[11px] !font-medium !uppercase !tracking-wider !rounded-[9999px] active:scale-[0.96] transition-all duration-200 cursor-pointer shadow-sm border-none outline-none"
                       >
                         Quick view
@@ -150,6 +168,7 @@ export const Bestsellers: FC = () => {
                       {/* Shopping Bag Button */}
                       <button 
                         type="button"
+                        onClick={() => handleAddToCart(product.id, product.name)}
                         className="w-8 h-8 flex items-center justify-center !bg-white !text-dark hover:!bg-dark hover:!text-white !rounded-full active:scale-[0.9] transition-all duration-200 cursor-pointer shadow-sm border-none outline-none"
                         aria-label="Add to cart"
                       >
