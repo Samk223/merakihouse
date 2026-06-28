@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import apiClient from "../api/apiClient";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -58,6 +59,10 @@ export const AdminTicketsPage = () => {
   const [activeTicket, setActiveTicket] = useState<SupportTicketType | null>(null);
   const [messagesLoading, setMessagesLoading] = useState(false);
 
+  // URL state persistence
+  const [searchParams, setSearchParams] = useSearchParams();
+  const ticketIdParam = searchParams.get("ticketId");
+
   // Filters State
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -106,7 +111,7 @@ export const AdminTicketsPage = () => {
     fetchTickets();
   }, [debouncedSearch, statusFilter, priorityFilter]);
 
-  const loadTicketDetails = async (ticketId: number) => {
+  const loadTicketDetails = useCallback(async (ticketId: number) => {
     setMessagesLoading(true);
     setError(null);
     try {
@@ -125,7 +130,13 @@ export const AdminTicketsPage = () => {
     } finally {
       setMessagesLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (ticketIdParam) {
+      loadTicketDetails(Number(ticketIdParam));
+    }
+  }, [ticketIdParam, loadTicketDetails]);
 
   useEffect(() => {
     if (activeTicket) {
@@ -378,7 +389,7 @@ export const AdminTicketsPage = () => {
               tickets.map((t) => (
                 <div
                   key={t.id}
-                  onClick={() => loadTicketDetails(t.id)}
+                  onClick={() => setSearchParams({ ticketId: t.id.toString() })}
                   className={`p-3.5 rounded-[16px] border text-left cursor-pointer transition-all duration-300 ${
                     activeTicket?.id === t.id
                       ? "bg-white border-[#9D6C76]/30 shadow-md translate-x-1"
