@@ -116,8 +116,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(true);
       try {
         const response = await apiClient.get(`/products`);
-        // Find product in list
-        const productsList = response.data.data || [];
+        // Find product in list (supports both paginated data structure and simple array)
+        const rawData = response.data.data;
+        const productsList = Array.isArray(rawData)
+          ? rawData
+          : (rawData && Array.isArray(rawData.data) ? rawData.data : []);
+        
         const product = productsList.find((p: any) => p.id === productId);
 
         if (!product) {

@@ -1,5 +1,7 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
+import { Loader2 } from "lucide-react";
 
 interface KitItem {
   id: number;
@@ -10,25 +12,25 @@ interface KitItem {
 
 const kitProducts: KitItem[] = [
   {
-    id: 1,
+    id: 4,
     name: "Hibiscus Repair Shampoo Bar",
     price: "₹299",
     imageUrl: "/home/bestsellers/hibiscus-shampoo.jpeg",
   },
   {
-    id: 2,
+    id: 12,
     name: "Botanical Body Oil",
     price: "₹489",
     imageUrl: "/home/bestsellers/body-oil.jpeg",
   },
   {
-    id: 3,
+    id: 13,
     name: "Sugar Body Scrub",
     price: "₹329",
     imageUrl: "/home/bestsellers/sugar-scrub.jpeg",
   },
   {
-    id: 4,
+    id: 16,
     name: "Soy Candle",
     price: "₹349",
     imageUrl: "/home/bestsellers/soy-candle.jpeg",
@@ -36,6 +38,22 @@ const kitProducts: KitItem[] = [
 ];
 
 export const FeaturedKit: FC = () => {
+  const { addToCart, setIsCartOpen } = useCart();
+  const [adding, setAdding] = useState(false);
+
+  const handleAddAllToCart = async () => {
+    setAdding(true);
+    try {
+      for (const item of kitProducts) {
+        await addToCart(item.id, 1);
+      }
+      setIsCartOpen(true);
+    } catch (e) {
+      console.error("Failed to add all kit products:", e);
+    } finally {
+      setAdding(false);
+    }
+  };
   return (
     <section className="w-full py-20 md:py-28 bg-[#FAF6F0] flex items-center justify-center">
       
@@ -153,15 +171,26 @@ export const FeaturedKit: FC = () => {
             {/* Primary Filled Cart Button */}
             <button
               type="button"
-              className="!py-3.5 !px-6 !bg-dark !text-white hover:!bg-primary hover:!text-white !font-body !text-xs sm:!text-sm !font-semibold !uppercase !tracking-widest !rounded-[9999px] active:scale-[0.96] transition-all duration-200 cursor-pointer shadow-md flex items-center gap-2 border-none outline-none"
+              onClick={handleAddAllToCart}
+              disabled={adding}
+              className="!py-3.5 !px-6 !bg-dark !text-white hover:!bg-primary hover:!text-white !font-body !text-xs sm:!text-sm !font-semibold !uppercase !tracking-widest !rounded-[9999px] active:scale-[0.96] transition-all duration-200 cursor-pointer shadow-md flex items-center gap-2 border-none outline-none disabled:opacity-50"
             >
-              <span>Add all to cart</span>
-              <span 
-                className="ml-2 font-medium"
-                style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif' }}
-              >
-                ₹1,199 <span className="line-through opacity-50 ml-1.5">₹1,466</span>
-              </span>
+              {adding ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Adding all...</span>
+                </>
+              ) : (
+                <>
+                  <span>Add all to cart</span>
+                  <span 
+                    className="ml-2 font-medium"
+                    style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif' }}
+                  >
+                    ₹1,199 <span className="line-through opacity-50 ml-1.5">₹1,466</span>
+                  </span>
+                </>
+              )}
             </button>
 
             {/* Secondary Outline kits Route */}

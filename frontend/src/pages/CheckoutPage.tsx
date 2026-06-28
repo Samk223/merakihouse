@@ -237,23 +237,31 @@ export const CheckoutPage = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-[70vh] bg-[#FAF8F5] flex flex-col justify-center items-center px-4 py-12 select-none">
-        <div className="w-full max-w-[450px] bg-white border border-[#28273F]/5 rounded-[24px] shadow-[0_8px_30px_rgba(40,39,63,0.02)] p-8 text-center animate-fade-in">
-          <Lock className="w-10 h-10 text-[#9D6C76] mx-auto mb-4" />
-          <h2 className="font-heading text-xl text-[#28273F] mb-3">Sign In Required</h2>
-          <p className="font-body text-xs text-[#666666] leading-relaxed max-w-sm mx-auto mb-8 font-light">
+      <div className="min-h-[70vh] w-full bg-[#FAF8F5] flex flex-col justify-center items-center px-4 py-12 select-none">
+        <div 
+          className="w-full max-w-[450px] bg-white border border-[#28273F]/5 rounded-[24px] shadow-[0_8px_30px_rgba(40,39,63,0.02)] p-8 text-center animate-fade-in flex flex-col items-center"
+          style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        >
+          <Lock className="w-10 h-10 text-[#9D6C76] mb-4" />
+          <h2 className="font-heading text-xl text-[#28273F] mb-3 w-full text-center">Sign In Required</h2>
+          <p 
+            className="font-body text-xs text-[#666666] leading-relaxed mb-8 font-light text-center w-full"
+            style={{ maxWidth: "340px", display: "block" }}
+          >
             To protect your transactions and secure shipping details, please log in or create a Meraki House account to complete checkout.
           </p>
-          <div className="space-y-3">
+          <div className="space-y-3 w-full flex flex-col items-center" style={{ width: "100%", maxWidth: "280px" }}>
             <Link
               to="/login?redirect=/checkout"
-              className="block w-full bg-[#28273F] text-white py-3.5 rounded-[9999px] font-body text-xs font-semibold tracking-wider uppercase hover:bg-[#9D6C76] active:scale-[0.96] transition-all duration-300 shadow-button"
+              className="block w-full bg-[#28273F] text-white py-3.5 rounded-[9999px] font-body text-xs font-semibold tracking-wider uppercase hover:bg-[#9D6C76] active:scale-[0.96] transition-all duration-300 shadow-button text-center"
+              style={{ display: "block", width: "100%", textAlign: "center", color: "#ffffff" }}
             >
               Sign In to Checkout
             </Link>
             <Link
               to="/signup?redirect=/checkout"
-              className="block w-full border border-[#28273F]/10 text-[#28273F] py-3.5 rounded-[9999px] font-body text-xs font-semibold tracking-wider uppercase hover:bg-[#28273F]/5 active:scale-[0.96] transition-all duration-300"
+              className="block w-full border border-[#28273F]/10 text-[#28273F] py-3.5 rounded-[9999px] font-body text-xs font-semibold tracking-wider uppercase hover:bg-[#28273F]/5 active:scale-[0.96] transition-all duration-300 text-center"
+              style={{ display: "block", width: "100%", textAlign: "center" }}
             >
               Create an Account
             </Link>
