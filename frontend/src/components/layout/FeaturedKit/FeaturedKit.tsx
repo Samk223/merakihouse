@@ -40,6 +40,24 @@ const kitProducts: KitItem[] = [
 export const FeaturedKit: FC = () => {
   const { addToCart, setIsCartOpen } = useCart();
   const [adding, setAdding] = useState(false);
+  
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
+
+  const handleCardClick = (productId: number) => {
+    if (window.innerWidth < 1024) {
+      setActiveCardId(productId);
+      setTimeout(() => {
+        setActiveCardId((prev) => (prev === productId ? null : prev));
+      }, 600);
+    }
+  };
+
+  const handleHotspotClick = (hotspotName: string) => {
+    if (window.innerWidth < 1024) {
+      setActiveHotspot((prev) => (prev === hotspotName ? null : hotspotName));
+    }
+  };
 
   const handleAddAllToCart = async () => {
     setAdding(true);
@@ -111,45 +129,47 @@ export const FeaturedKit: FC = () => {
           {/* Individual Kit Products Shelf */}
           <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10">
             {kitProducts.map((product) => (
-              <div key={product.id} className="flex flex-col items-start w-full cursor-heart group/card">
+              <div 
+                key={product.id} 
+                onClick={() => handleCardClick(product.id)}
+                className="flex flex-col items-start w-full cursor-heart group/card"
+              >
                 {/* Square Product Image Container with overflow-visible to let flowers burst outwards */}
                 <div className="w-full aspect-square relative">
                   {/* Zooming Image Wrapper */}
-                  <div className="w-full h-full bg-[#F5EFE6] rounded-md overflow-hidden border border-neutral-200/10 shadow-sm transition-transform duration-500 group-hover/card:scale-103">
+                  <div className={`w-full h-full bg-[#F5EFE6] rounded-md overflow-hidden border border-neutral-200/10 shadow-sm transition-transform duration-500 group-hover/card:scale-103 ${activeCardId === product.id ? "scale-103" : ""}`}>
                     <img
                       src={product.imageUrl}
                       alt={product.name}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                  </div>
-
-                  {/* Roses & Flowers Bomb Bursting on Card Hover */}
+                                    {/* Roses & Flowers Bomb Bursting on Card Hover */}
                   {/* 1. Terracotta Blossom */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-4 h-4 text-[#9D6C76] opacity-0 pointer-events-none group-hover/card:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-4 h-4 text-[#9D6C76] opacity-0 pointer-events-none group-hover/card:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20 ${activeCardId === product.id ? "animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                     <path d="M12 8a4 4 0 110 8 4 4 0 010-8zm0 2a2 2 0 100 4 2 2 0 000-4zm0-9a3 3 0 013 3c0 .82-.33 1.57-.88 2.12-.55.55-1.3.88-2.12.88a3 3 0 01-3-3c0-.82.33-1.57.88-2.12C10.43 2.33 11.18 2 12 2zm0 14c.82 0 1.57.33 2.12.88.55.55.88 1.3.88 2.12a3 3 0 01-3 3 3 3 0 01-3-3c0-.82.33-1.57.88-2.12.55-.55 1.3-.88 2.12-.88zm7-7a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-3-3c0-.82.33-1.57.88-2.12C16.43 9.33 17.18 9 18 9zm-12 0c.82 0 1.57.33 2.12.88C8.67 10.43 9 11.18 9 12a3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3z" />
                   </svg>
                   {/* 2. Soft Pink Rosebud */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#E379B7] opacity-0 pointer-events-none group-hover/card:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#E379B7] opacity-0 pointer-events-none group-hover/card:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20 ${activeCardId === product.id ? "animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                     <path d="M12 2c-3.3 0-6 2.7-6 6v3c0 2.2 1.8 4 4 4v3h4v-3c2.2 0 4-1.8 4-4V8c0-3.3-2.7-6-6-6zm2 9h-4V8c0-1.1.9-2 2-2s2 .9 2 2v3z" />
                   </svg>
                   {/* 3. Clay Rose Blossom */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-4 h-4 text-[#A9787C] opacity-0 pointer-events-none group-hover/card:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-4 h-4 text-[#A9787C] opacity-0 pointer-events-none group-hover/card:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20 ${activeCardId === product.id ? "animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                     <path d="M12 8a4 4 0 110 8 4 4 0 010-8zm0 2a2 2 0 100 4 2 2 0 000-4zm0-9a3 3 0 013 3c0 .82-.33 1.57-.88 2.12-.55.55-1.3.88-2.12.88a3 3 0 01-3-3c0-.82.33-1.57.88-2.12C10.43 2.33 11.18 2 12 2zm0 14c.82 0 1.57.33 2.12.88.55.55.88 1.3.88 2.12a3 3 0 01-3 3 3 3 0 01-3-3c0-.82.33-1.57.88-2.12.55-.55 1.3-.88 2.12-.88zm7-7a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-3-3c0-.82.33-1.57.88-2.12C16.43 9.33 17.18 9 18 9zm-12 0c.82 0 1.57.33 2.12.88C8.67 10.43 9 11.18 9 12a3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3z" />
                   </svg>
                   {/* 4. White Cream Rosebud */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/card:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/card:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20 ${activeCardId === product.id ? "animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                     <path d="M12 2c-3.3 0-6 2.7-6 6v3c0 2.2 1.8 4 4 4v3h4v-3c2.2 0 4-1.8 4-4V8c0-3.3-2.7-6-6-6zm2 9h-4V8c0-1.1.9-2 2-2s2 .9 2 2v3z" />
                   </svg>
                   {/* 5. Terracotta Rosebud */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/card:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/card:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20 ${activeCardId === product.id ? "animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                     <path d="M12 2c-3.3 0-6 2.7-6 6v3c0 2.2 1.8 4 4 4v3h4v-3c2.2 0 4-1.8 4-4V8c0-3.3-2.7-6-6-6zm2 9h-4V8c0-1.1.9-2 2-2s2 .9 2 2v3z" />
                   </svg>
                   {/* 6. Soft Pink Blossom */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-4 h-4 text-[#E379B7] opacity-0 pointer-events-none group-hover/card:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-4 h-4 text-[#E379B7] opacity-0 pointer-events-none group-hover/card:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] z-20 ${activeCardId === product.id ? "animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                     <path d="M12 8a4 4 0 110 8 4 4 0 010-8zm0 2a2 2 0 100 4 2 2 0 000-4zm0-9a3 3 0 013 3c0 .82-.33 1.57-.88 2.12-.55.55-1.3.88-2.12.88a3 3 0 01-3-3c0-.82.33-1.57.88-2.12C10.43 2.33 11.18 2 12 2zm0 14c.82 0 1.57.33 2.12.88.55.55.88 1.3.88 2.12a3 3 0 01-3 3 3 3 0 01-3-3c0-.82.33-1.57.88-2.12.55-.55 1.3-.88 2.12-.88zm7-7a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-3-3c0-.82.33-1.57.88-2.12C16.43 9.33 17.18 9 18 9zm-12 0c.82 0 1.57.33 2.12.88C8.67 10.43 9 11.18 9 12a3 3 0 01-3 3 3 3 0 01-3-3 3 3 0 013-3z" />
                   </svg>
-                </div>
+                </div>  </div>
                 {/* Text details below */}
                 <h3 className="font-body font-medium text-dark/90 text-[11px] sm:text-xs mt-3 leading-tight min-h-[2.5rem] flex items-start">
                   {product.name}
@@ -209,13 +229,15 @@ export const FeaturedKit: FC = () => {
           <div className="w-full max-w-[420px] aspect-square relative select-none cursor-heart">
             
             {/* Decorative Static Brand Color Circles matching reference image coordinates */}
-            
-            {/* 1. HAIR HOTSPOT (Top-Left on dark hair - solid clay-rose background with white plus SVG) */}
-            <div className="absolute left-[24%] top-[14%] z-20 group/hotspot cursor-heart">
+             {/* 1. HAIR HOTSPOT (Top-Left on dark hair - solid clay-rose background with white plus SVG) */}
+            <div 
+              onClick={() => handleHotspotClick("hair")}
+              className="absolute left-[24%] top-[14%] z-20 group/hotspot cursor-heart"
+            >
               <div className="absolute inset-0 rounded-full bg-[#A9787C]/50 animate-ping" />
               <button
                 type="button"
-                className="relative w-8 h-8 rounded-full bg-[#A9787C] border-2 border-white shadow-lg flex items-center justify-center cursor-heart focus:outline-none transition-transform duration-300 group-hover/hotspot:scale-110"
+                className={`relative w-8 h-8 rounded-full bg-[#A9787C] border-2 border-white shadow-lg flex items-center justify-center cursor-heart focus:outline-none transition-transform duration-300 group-hover/hotspot:scale-110 ${activeHotspot === "hair" ? "scale-110" : ""}`}
                 aria-label="Hair care details"
               >
                 {/* Thick Vector SVG Plus Icon in White */}
@@ -231,37 +253,40 @@ export const FeaturedKit: FC = () => {
                 </svg>
 
                 {/* Exploding Burst Mini Hearts (Instagram style) */}
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "hair" ? "animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "hair" ? "animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "hair" ? "animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E5C7B0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E5C7B0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "hair" ? "animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "hair" ? "animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "hair" ? "animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
               </button>
               {/* Tooltip Description Bubble */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2.5 w-52 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-md border border-[#9D6C76]/20 opacity-0 pointer-events-none scale-95 group-hover/hotspot:opacity-100 group-hover/hotspot:scale-100 transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] text-[11px] leading-relaxed text-dark text-center select-none z-30">
+              <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-2.5 w-52 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-md border border-[#9D6C76]/20 opacity-0 pointer-events-none scale-95 group-hover/hotspot:opacity-100 group-hover/hotspot:scale-100 transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] text-[11px] leading-relaxed text-dark text-center select-none z-30 ${activeHotspot === "hair" ? "!opacity-100 !scale-100 !pointer-events-auto" : ""}`}>
                 <strong>Rice Water Shampoo Bar & Hair Serum</strong> deeply nourish roots, smooth cuticles, and make hair anti-frizz and stronger.
               </div>
             </div>
             
             {/* 2. CHEEK HOTSPOT (Face Glow - rose-gold background with white plus SVG) */}
-            <div className="absolute left-[60%] top-[45%] z-20 group/hotspot cursor-heart">
+            <div 
+              onClick={() => handleHotspotClick("cheek")}
+              className="absolute left-[60%] top-[45%] z-20 group/hotspot cursor-heart"
+            >
               <div className="absolute inset-0 rounded-full bg-[#9D6C76]/50 animate-ping" />
               <button
                 type="button"
-                className="relative w-8 h-8 rounded-full bg-[#9D6C76] border-2 border-white shadow-lg flex items-center justify-center cursor-heart focus:outline-none transition-transform duration-300 group-hover/hotspot:scale-110"
+                className={`relative w-8 h-8 rounded-full bg-[#9D6C76] border-2 border-white shadow-lg flex items-center justify-center cursor-heart focus:outline-none transition-transform duration-300 group-hover/hotspot:scale-110 ${activeHotspot === "cheek" ? "scale-110" : ""}`}
                 aria-label="Skincare details"
               >
                 {/* Thick Vector SVG Plus Icon in White */}
@@ -276,37 +301,40 @@ export const FeaturedKit: FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
                 
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "cheek" ? "animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "cheek" ? "animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#E5C7B0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#E5C7B0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "cheek" ? "animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "cheek" ? "animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "cheek" ? "animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "cheek" ? "animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
               </button>
               {/* Tooltip Description Bubble */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2.5 w-52 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-md border border-[#9D6C76]/20 opacity-0 pointer-events-none scale-95 group-hover/hotspot:opacity-100 group-hover/hotspot:scale-100 transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] text-[11px] leading-relaxed text-dark text-center select-none z-30">
+              <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-2.5 w-52 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-md border border-[#9D6C76]/20 opacity-0 pointer-events-none scale-95 group-hover/hotspot:opacity-100 group-hover/hotspot:scale-100 transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] text-[11px] leading-relaxed text-dark text-center select-none z-30 ${activeHotspot === "cheek" ? "!opacity-100 !scale-100 !pointer-events-auto" : ""}`}>
                 <strong>Botanical Body & Face Oil</strong> infuses sweet almond and organic rosehip to restore natural radiance for an organic, healthy face glow.
               </div>
             </div>
-
+            
             {/* 3. COLLARBONE HOTSPOT (Moisture - soft clay background with white plus SVG) */}
-            <div className="absolute left-[18%] bottom-[12%] z-20 group/hotspot cursor-heart">
+            <div 
+              onClick={() => handleHotspotClick("collarbone")}
+              className="absolute left-[18%] bottom-[12%] z-20 group/hotspot cursor-heart"
+            >
               <div className="absolute inset-0 rounded-full bg-[#A9787C]/50 animate-ping" />
               <button
                 type="button"
-                className="relative w-8 h-8 rounded-full bg-[#A9787C] border-2 border-white shadow-lg flex items-center justify-center cursor-heart focus:outline-none transition-transform duration-300 group-hover/hotspot:scale-110"
+                className={`relative w-8 h-8 rounded-full bg-[#A9787C] border-2 border-white shadow-lg flex items-center justify-center cursor-heart focus:outline-none transition-transform duration-300 group-hover/hotspot:scale-110 ${activeHotspot === "collarbone" ? "scale-110" : ""}`}
                 aria-label="Body care details"
               >
                 {/* Thick Vector SVG Plus Icon in White */}
@@ -321,27 +349,27 @@ export const FeaturedKit: FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
                 
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "collarbone" ? "animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "collarbone" ? "animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#E5C7B0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#E5C7B0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "collarbone" ? "animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "collarbone" ? "animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "collarbone" ? "animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E379B7] opacity-0 pointer-events-none group-hover/hotspot:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeHotspot === "collarbone" ? "animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
               </button>
               {/* Tooltip Description Bubble */}
-              <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2.5 w-52 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-md border border-[#9D6C76]/20 opacity-0 pointer-events-none scale-95 group-hover/hotspot:opacity-100 group-hover/hotspot:scale-100 transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] text-[11px] leading-relaxed text-dark text-center select-none z-30">
+              <div className={`absolute left-1/2 -translate-x-1/2 bottom-full mb-2.5 w-52 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-md border border-[#9D6C76]/20 opacity-0 pointer-events-none scale-95 group-hover/hotspot:opacity-100 group-hover/hotspot:scale-100 transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] text-[11px] leading-relaxed text-dark text-center select-none z-30 ${activeHotspot === "collarbone" ? "!opacity-100 !scale-100 !pointer-events-auto" : ""}`}>
                 <strong>Sugar Body Scrub & Rich Body Butter</strong> melt into the skin, locking in deep hydration for 24-hour moisturized softness.
               </div>
             </div>

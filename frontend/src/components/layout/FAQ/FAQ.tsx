@@ -34,9 +34,19 @@ const faqData: FAQItem[] = [
 
 export const FAQ: FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [isTitleActive, setIsTitleActive] = useState(false);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
+  };
+
+  const handleTitleClick = () => {
+    if (window.innerWidth < 1024) {
+      setIsTitleActive(true);
+      setTimeout(() => {
+        setIsTitleActive(false);
+      }, 600);
+    }
   };
 
   return (
@@ -86,16 +96,19 @@ export const FAQ: FC = () => {
           <span className="block font-body font-medium text-[#7A4B54] text-xs sm:text-sm tracking-[0.2em] uppercase select-none w-full">
             FAQ
           </span>
-          <h2 className="block font-body font-light text-3xl md:text-[2.25rem] leading-[1.3] text-[#2C293E] mt-3 w-full md:w-[420px] max-w-full relative cursor-heart group/title px-4 py-1">
+          <h2 
+            onClick={handleTitleClick}
+            className="block font-body font-light text-3xl md:text-[2.25rem] leading-[1.3] text-[#2C293E] mt-3 w-full md:w-[420px] max-w-full relative cursor-heart group/title px-4 py-1"
+          >
             Everything you might be interested in about Meraki House on one page.
             
             {/* Question Mark Burst Elements (Question Bomb) */}
-            <span className="absolute top-1/2 left-1/2 font-body font-light text-xl text-[#7A4B54] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none">?</span>
-            <span className="absolute top-1/2 left-1/2 font-body font-light text-2xl text-[#9D6C76] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none">?</span>
-            <span className="absolute top-1/2 left-1/2 font-body font-light text-lg text-[#A9787C] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none">?</span>
-            <span className="absolute top-1/2 left-1/2 font-body font-light text-2xl text-[#FAF6F0] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none">?</span>
-            <span className="absolute top-1/2 left-1/2 font-body font-light text-xl text-[#7A4B54] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none">?</span>
-            <span className="absolute top-1/2 left-1/2 font-body font-light text-2xl text-[#FAF6F0] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none">?</span>
+            <span className={`absolute top-1/2 left-1/2 font-body font-light text-xl text-[#7A4B54] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none ${isTitleActive ? "animate-[popQuestion1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>?</span>
+            <span className={`absolute top-1/2 left-1/2 font-body font-light text-2xl text-[#9D6C76] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none ${isTitleActive ? "animate-[popQuestion2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>?</span>
+            <span className={`absolute top-1/2 left-1/2 font-body font-light text-lg text-[#A9787C] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none ${isTitleActive ? "animate-[popQuestion3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>?</span>
+            <span className={`absolute top-1/2 left-1/2 font-body font-light text-2xl text-[#FAF6F0] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none ${isTitleActive ? "animate-[popQuestion4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>?</span>
+            <span className={`absolute top-1/2 left-1/2 font-body font-light text-xl text-[#7A4B54] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none ${isTitleActive ? "animate-[popQuestion5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>?</span>
+            <span className={`absolute top-1/2 left-1/2 font-body font-light text-2xl text-[#FAF6F0] opacity-0 pointer-events-none group-hover/title:animate-[popQuestion6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] select-none ${isTitleActive ? "animate-[popQuestion6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>?</span>
           </h2>
         </div>
 
