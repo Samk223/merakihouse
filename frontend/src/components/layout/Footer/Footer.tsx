@@ -154,9 +154,6 @@ export const Footer: FC = () => {
                   <button onClick={() => handleLinkClick("/collections")} className="hover:text-white cursor-pointer bg-transparent border-none p-0 text-left">Categories</button>
                 </li>
                 <li>
-                  <button onClick={() => handleLinkClick("#hero")} className="hover:text-white cursor-pointer bg-transparent border-none p-0 text-left">About</button>
-                </li>
-                <li>
                   <button onClick={() => handleLinkClick("#hero")} className="hover:text-white cursor-pointer bg-transparent border-none p-0 text-left">News</button>
                 </li>
               </ul>

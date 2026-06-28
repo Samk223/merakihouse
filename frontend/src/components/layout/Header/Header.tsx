@@ -80,9 +80,7 @@ export const Header = ({ isHome = false }: HeaderProps) => {
 
         {/* Right Column: Desktop Actions & Links or Mobile actions */}
         <div className="flex items-center justify-end h-full">
-          {/* Desktop Extra Links */}
           <NavigationGroup gap="md" align="right" className="hidden lg:flex mr-6 h-full">
-            <NavigationLink to="/about">About</NavigationLink>
             <NavigationLink to="/journal">Journal</NavigationLink>
           </NavigationGroup>
           
@@ -143,13 +141,6 @@ export const Header = ({ isHome = false }: HeaderProps) => {
             className="font-body text-base font-semibold uppercase tracking-wider py-2 border-b border-border-main/20"
           >
             Gift Kits
-          </Link>
-          <Link
-            to="/about"
-            onClick={() => setMobileMenuOpen(false)}
-            className="font-body text-base font-semibold uppercase tracking-wider py-2 border-b border-border-main/20"
-          >
-            About Us
           </Link>
           <Link
             to="/journal"
