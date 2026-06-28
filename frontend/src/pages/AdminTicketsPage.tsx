@@ -10,7 +10,8 @@ import {
   MessageSquare,
   Clock,
   Send,
-  AlertCircle
+  AlertCircle,
+  ChevronDown
 } from "lucide-react";
 
 interface SupportMessageType {
