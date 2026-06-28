@@ -31,6 +31,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+echo "🔍 Live Config Dump (Sanitised):"
+php artisan tinker --execute="echo 'DB_CONNECTION: ' . config('database.default') . PHP_EOL; echo 'SESSION_DRIVER: ' . config('session.driver') . PHP_EOL; echo 'CACHE_STORE: ' . config('cache.default') . PHP_EOL; echo 'QUEUE_CONNECTION: ' . config('queue.default') . PHP_EOL; echo 'MAIL_MAILER: ' . config('mail.default') . PHP_EOL; echo 'BROADCAST_CONNECTION: ' . config('broadcasting.default') . PHP_EOL;"
+
 # Create storage symlink
 php artisan storage:link 2>/dev/null || true
 
