@@ -42,8 +42,8 @@ export const Header = ({ isHome = false }: HeaderProps) => {
     : "bg-[#FAF8F5]/95 backdrop-blur-md shadow-card border-b border-border-main/40 text-text-primary";
 
   const headerHeightClass = isTransparent
-    ? "h-[96px] md:h-[104px]"
-    : "h-[76px] md:h-[84px]";
+    ? "h-[96px] lg:h-[104px]"
+    : "h-[76px] lg:h-[84px]";
 
   const logoSize = isTransparent ? "lg" : "md";
 
@@ -61,12 +61,12 @@ export const Header = ({ isHome = false }: HeaderProps) => {
           <MobileMenuButton
             isOpen={mobileMenuOpen}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-current"
+            className="lg:hidden text-current"
           />
           <NavigationGroup
             align="left"
             gap="md"
-            className="hidden md:flex h-full"
+            className="hidden lg:flex h-full"
           >
             <NavigationLink to="/collections/hair-care">Hair Care</NavigationLink>
             <NavigationLink to="/collections/body-care">Body Care</NavigationLink>
@@ -87,7 +87,7 @@ export const Header = ({ isHome = false }: HeaderProps) => {
           </NavigationGroup>
           
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-1 text-current">
+          <div className="hidden lg:flex items-center gap-1 text-current">
             <SearchButton size="md" className="text-current" />
             <Link to="/wishlist" aria-label="Wishlist">
               <WishlistButton size="md" count={0} className="text-current cursor-pointer" />
@@ -99,7 +99,7 @@ export const Header = ({ isHome = false }: HeaderProps) => {
           </div>
 
           {/* Mobile Actions */}
-          <div className="md:hidden flex items-center gap-1 text-current">
+          <div className="lg:hidden flex items-center gap-1 text-current">
             <Link to="/wishlist" aria-label="Wishlist">
               <WishlistButton size="sm" className="text-current cursor-pointer" />
             </Link>
