@@ -3,5 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return response()->json([
+        'status' => 'healthy',
+        'service' => 'Meraki House API',
+        'timestamp' => now()->toIso8601String()
+    ]);
 });
