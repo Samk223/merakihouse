@@ -168,3 +168,20 @@ textarea::placeholder {
 .cursor-celebration {
   cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M6 6 L7 8 L9 9 L7 10 L6 12 L5 10 L3 9 L5 8 Z' fill='%23E1B057'/%3E%3Cpath d='M22 8 L23 10 L25 11 L23 12 L22 14 L21 12 L19 11 L21 10 Z' fill='%23C597A0'/%3E%3Cpath d='M10 20 Q12 18 14 22 T18 20' stroke='%239D6C76' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M18 22 Q20 25 22 21 T26 23' stroke='%230E7C7B' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='12' cy='10' r='1.5' fill='%239D6C76'/%3E%3C/svg%3E") 16 16, auto;
 }
+
+/* Custom Heart Cursor on Hover */
+.cursor-heart {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%239D6C76'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") 12 10, auto !important;
+}
+
+.cursor-heart a,
+.cursor-heart button,
+.cursor-heart label,
+.cursor-heart span {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%239D6C76'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") 12 10, pointer !important;
+}
+
+.cursor-heart input,
+.cursor-heart input:focus {
+  cursor: text !important;
+}

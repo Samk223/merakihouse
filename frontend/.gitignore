@@ -29,3 +29,12 @@ dist-ssr
 !.env.example
 
 .agents
+
+# AI Agent / Brain folders
+.gemini/
+.cursor/
+.copilot/
+.aider/
+.claude/
+brain/
+.antigravity/
