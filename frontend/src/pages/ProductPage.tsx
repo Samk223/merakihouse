@@ -581,7 +581,7 @@ export const ProductPage = () => {
             <img
               src={galleryImages[activeImageIndex]}
               alt={product.name}
-              className="w-full h-full object-cover transition-transform duration-750 ease-[cubic-bezier(0.3,0,0,1)] hover:scale-105 cursor-heart"
+              className="w-full h-full object-cover transition-transform duration-750 ease-[cubic-bezier(0.3,0,0,1)] hover:scale-105 cursor-heart !w-full !h-full !max-w-none !max-h-none"
             />
             
             {/* Sunshine Bomb Bursting Over Main Image on Hover */}
@@ -687,7 +687,7 @@ export const ProductPage = () => {
                     : "border-[#28273F]/5 hover:border-[#28273F]/20"
                 }`}
               >
-                <img src={img} alt={`${product.name} thumb ${index}`} className="w-full h-full object-cover cursor-heart" />
+                <img src={img} alt={`${product.name} thumb ${index}`} className="w-full h-full object-cover cursor-heart !w-full !h-full !max-w-none !max-h-none" />
               </button>
             ))}
           </div>
