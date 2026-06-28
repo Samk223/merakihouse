@@ -764,7 +764,7 @@ export const ProductPage = () => {
                       <div className={`w-8 h-8 rounded-full overflow-hidden border-2 border-solid transition-all duration-300 aspect-square cursor-heart ${
                         isActive ? "border-[#9D6C76] scale-110 shadow-xs" : "border-[#28273F]/10 group-hover:border-[#9D6C76]"
                       }`}>
-                        <img src={img} className="w-full h-full object-cover cursor-heart" alt="" />
+                        <img src={img} className="!w-full !h-full !max-w-none object-cover cursor-heart" alt="" />
                       </div>
                       <span className={`text-[11px] font-body tracking-wider transition-colors cursor-heart ${
                         isActive ? "text-[#9D6C76] font-bold" : "text-[#28273F]/70 group-hover:text-[#9D6C76]"
@@ -1349,7 +1349,7 @@ export const ProductPage = () => {
                     <img 
                       src={resolveProductImage(p.images?.find((img) => img.is_primary)?.path || p.images?.[0]?.path)} 
                       alt={p.name}
-                      className="w-full h-full object-cover transition-transform duration-750 ease-[cubic-bezier(0.3,0,0,1)] group-hover:scale-105 cursor-heart"
+                      className="w-full h-full object-cover transition-transform duration-750 ease-[cubic-bezier(0.3,0,0,1)] group-hover:scale-105 cursor-heart !w-full !h-full !max-w-none"
                     />
                   </div>
 
