@@ -796,8 +796,13 @@ export const CategoryPage = () => {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.3,0,0,1)]"
                           loading="lazy"
                         />
-                        {/* Indicators (Best Seller, New Arrival) */}
+                        {/* Indicators (Featured, Best Seller, New Arrival) */}
                         <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                          {product.is_featured && (
+                            <span className="bg-[#28273F] text-white text-[9px] font-body font-bold tracking-widest uppercase px-2.5 py-1 rounded-[4px] shadow-sm">
+                              Featured
+                            </span>
+                          )}
                           {product.is_best_seller && (
                             <span className="bg-[#9D6C76] text-white text-[9px] font-body font-bold tracking-widest uppercase px-2.5 py-1 rounded-[4px] shadow-sm">
                               Best Seller

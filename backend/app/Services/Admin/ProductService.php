@@ -92,9 +92,10 @@ class ProductService
                 'gst_percentage' => $data['gst_percentage'] ?? 18,
                 'stock' => $data['stock'],
                 'low_stock_threshold' => $data['low_stock_threshold'] ?? 5,
+                'is_featured' => $data['is_featured'] ?? ($data['featured'] ?? false),
                 'featured' => $data['is_featured'] ?? ($data['featured'] ?? false),
-                'best_seller' => $data['is_best_seller'] ?? ($data['best_seller'] ?? false),
-                'new_arrival' => $data['is_new_arrival'] ?? ($data['new_arrival'] ?? false),
+                'is_best_seller' => $data['is_best_seller'] ?? ($data['best_seller'] ?? false),
+                'is_new_arrival' => $data['is_new_arrival'] ?? ($data['new_arrival'] ?? false),
                 'is_active' => $data['is_active'] ?? true,
                 'weight' => $data['weight'] ?? null,
                 'dimensions' => $data['dimensions'] ?? null,
@@ -143,8 +144,9 @@ class ProductService
                 'stock',
                 'low_stock_threshold',
                 'featured',
-                'best_seller',
-                'new_arrival',
+                'is_featured',
+                'is_best_seller',
+                'is_new_arrival',
                 'is_active',
                 'weight',
                 'dimensions',
@@ -155,16 +157,6 @@ class ProductService
                 if (array_key_exists($field, $data)) {
                     $productData[$field] = $data[$field];
                 }
-            }
-
-            if (array_key_exists('is_featured', $data)) {
-                $productData['featured'] = $data['is_featured'];
-            }
-            if (array_key_exists('is_best_seller', $data)) {
-                $productData['best_seller'] = $data['is_best_seller'];
-            }
-            if (array_key_exists('is_new_arrival', $data)) {
-                $productData['new_arrival'] = $data['is_new_arrival'];
             }
 
             $product->update($productData);

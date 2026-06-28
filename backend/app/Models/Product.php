@@ -27,8 +27,9 @@ class Product extends Model
         'gst_percentage',
         'track_inventory',
         'featured',
-        'best_seller',
-        'new_arrival',
+        'is_featured',
+        'is_best_seller',
+        'is_new_arrival',
         'is_active',
         'brand',
         'weight',
@@ -36,12 +37,6 @@ class Product extends Model
         'meta_title',
         'meta_description',
         'product_type',
-    ];
-
-    protected $appends = [
-        'is_featured',
-        'is_best_seller',
-        'is_new_arrival',
     ];
 
     protected $casts = [
@@ -53,43 +48,25 @@ class Product extends Model
         'low_stock_threshold' => 'integer',
         'gst_percentage' => 'integer',
         'featured' => 'boolean',
-        'best_seller' => 'boolean',
-        'new_arrival' => 'boolean',
+        'is_featured' => 'boolean',
+        'is_best_seller' => 'boolean',
+        'is_new_arrival' => 'boolean',
         'is_active' => 'boolean',
         'track_inventory' => 'boolean',
         'weight' => 'decimal:2',
     ];
 
-    // Accessors
-    public function getIsFeaturedAttribute(): bool
-    {
-        return (bool) $this->featured;
-    }
-
-    public function getIsBestSellerAttribute(): bool
-    {
-        return (bool) ($this->best_seller ?? false);
-    }
-
-    public function getIsNewArrivalAttribute(): bool
-    {
-        return (bool) ($this->new_arrival ?? false);
-    }
-
-    // Mutators
+    // Mutators to keep featured and is_featured columns in sync
     public function setIsFeaturedAttribute($value): void
     {
+        $this->attributes['is_featured'] = (bool) $value;
         $this->attributes['featured'] = (bool) $value;
     }
 
-    public function setIsBestSellerAttribute($value): void
+    public function setFeaturedAttribute($value): void
     {
-        $this->attributes['best_seller'] = (bool) $value;
-    }
-
-    public function setIsNewArrivalAttribute($value): void
-    {
-        $this->attributes['new_arrival'] = (bool) $value;
+        $this->attributes['is_featured'] = (bool) $value;
+        $this->attributes['featured'] = (bool) $value;
     }
 
     public function category(): BelongsTo
