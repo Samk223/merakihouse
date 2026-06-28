@@ -1,9 +1,11 @@
 import { FC, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useToast } from "../../../context/ToastContext";
 
 export const Footer: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { showToast } = useToast();
 
   // Star rating state
   const [rating, setRating] = useState<number>(0);
@@ -166,7 +168,7 @@ export const Footer: FC = () => {
               </h4>
               <ul className="flex flex-col gap-3 font-body font-light text-white/50 text-[11px] sm:text-xs select-none">
                 <li>
-                  <button onClick={() => handleLinkClick("#hero")} className="hover:text-white cursor-pointer bg-transparent border-none p-0 text-left">Journal</button>
+                  <button onClick={() => showToast("Journal Coming Soon")} className="hover:text-white cursor-pointer bg-transparent border-none p-0 text-left">Journal</button>
                 </li>
                 <li>
                   <button onClick={() => handleLinkClick("#hero")} className="hover:text-white cursor-pointer bg-transparent border-none p-0 text-left">Privacy policy</button>

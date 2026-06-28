@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { useCart } from "../../../context/CartContext";
+import { useToast } from "../../../context/ToastContext";
 import {
   Logo,
   MobileMenuButton,
@@ -20,6 +21,7 @@ export interface HeaderProps {
 export const Header = ({ isHome = false }: HeaderProps) => {
   const { user, isAuthenticated, isAdmin } = useAuth();
   const { cartCount, setIsCartOpen } = useCart();
+  const { showToast } = useToast();
   const userName = user ? user.name : "Guest";
   
   const [scrolled, setScrolled] = useState(false);
@@ -81,7 +83,7 @@ export const Header = ({ isHome = false }: HeaderProps) => {
         {/* Right Column: Desktop Actions & Links or Mobile actions */}
         <div className="flex items-center justify-end h-full">
           <NavigationGroup gap="md" align="right" className="hidden lg:flex mr-6 h-full">
-            <NavigationLink to="/journal">Journal</NavigationLink>
+            <NavigationLink to="#" onClick={(e) => { e.preventDefault(); showToast("Journal Coming Soon"); }}>Journal</NavigationLink>
           </NavigationGroup>
           
           {/* Desktop Actions */}
@@ -143,8 +145,12 @@ export const Header = ({ isHome = false }: HeaderProps) => {
             Gift Kits
           </Link>
           <Link
-            to="/journal"
-            onClick={() => setMobileMenuOpen(false)}
+            to="#"
+            onClick={(e) => {
+              e.preventDefault();
+              setMobileMenuOpen(false);
+              showToast("Journal Coming Soon");
+            }}
             className="font-body text-base font-semibold uppercase tracking-wider py-2"
           >
             Journal
