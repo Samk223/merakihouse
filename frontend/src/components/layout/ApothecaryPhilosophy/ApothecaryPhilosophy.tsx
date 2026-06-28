@@ -1,6 +1,17 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 export const ApothecaryPhilosophy: FC = () => {
+  const [isHeartActive, setIsHeartActive] = useState(false);
+
+  const handleHeartClick = () => {
+    if (window.innerWidth < 1024) {
+      setIsHeartActive(true);
+      setTimeout(() => {
+        setIsHeartActive(false);
+      }, 600);
+    }
+  };
+
   return (
     <section className="relative w-full py-20 md:py-28 px-6 md:px-12 lg:px-24 bg-[#FAF6F0] flex flex-col items-center justify-center overflow-hidden">
       
@@ -10,7 +21,10 @@ export const ApothecaryPhilosophy: FC = () => {
           A mindful sanctuary for your daily self-care. Hand-crafted botanicals that honor your skin's unique nature,{" "}
           
           {/* Hand-drawn Outline Heart SVG Inline Illustration with Instagram-like Burst on Hover */}
-          <span className="relative inline-block align-middle mx-1 md:mx-2 group/heart text-[#9D6C76] cursor-heart">
+          <span 
+            onClick={handleHeartClick}
+            className="relative inline-block align-middle mx-1 md:mx-2 group/heart text-[#9D6C76] cursor-heart"
+          >
             <style>{`
               @keyframes heartBurst1 {
                 0% { transform: translate(-50%, -50%) translate(0, 0) scale(0); opacity: 0; }
@@ -58,7 +72,9 @@ export const ApothecaryPhilosophy: FC = () => {
               strokeWidth="2.3"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 transform transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] group-hover/heart:scale-125 group-hover/heart:fill-current"
+              className={`w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 transform transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] group-hover/heart:scale-125 group-hover/heart:fill-current ${
+                isHeartActive ? "scale-125 fill-current" : ""
+              }`}
               aria-hidden="true"
             >
               <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
@@ -68,42 +84,54 @@ export const ApothecaryPhilosophy: FC = () => {
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]"
+              className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${
+                isHeartActive ? "animate-[heartBurst1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""
+              }`}
             >
               <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
             </svg>
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#C597A0] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]"
+              className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#C597A0] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${
+                isHeartActive ? "animate-[heartBurst2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""
+              }`}
             >
               <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
             </svg>
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]"
+              className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${
+                isHeartActive ? "animate-[heartBurst3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""
+              }`}
             >
               <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
             </svg>
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]"
+              className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#9D6C76] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${
+                isHeartActive ? "animate-[heartBurst4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""
+              }`}
             >
               <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
             </svg>
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#C597A0] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]"
+              className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#C597A0] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${
+                isHeartActive ? "animate-[heartBurst5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""
+              }`}
             >
               <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
             </svg>
             <svg
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]"
+              className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/heart:animate-[heartBurst6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${
+                isHeartActive ? "animate-[heartBurst6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""
+              }`}
             >
               <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
             </svg>

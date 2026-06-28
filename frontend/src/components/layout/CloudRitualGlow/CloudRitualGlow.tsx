@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface RitualFeature {
@@ -48,6 +48,17 @@ const features: RitualFeature[] = [
 ];
 
 export const CloudRitualGlow: FC = () => {
+  const [activeFeatureIndex, setActiveFeatureIndex] = useState<number | null>(null);
+
+  const handleFeatureClick = (index: number) => {
+    if (window.innerWidth < 1024) {
+      setActiveFeatureIndex(index);
+      setTimeout(() => {
+        setActiveFeatureIndex((prev: number | null) => (prev === index ? null : prev));
+      }, 600);
+    }
+  };
+
   return (
     <section className="relative w-full min-h-[750px] lg:min-h-[850px] overflow-hidden bg-[#A9787C] pt-20 pb-28 md:pb-40 flex flex-col justify-between animate-fade-in">
       {/* Self-contained CSS for slow-drifting cloud and fanning love hearts burst animations */}
@@ -110,30 +121,34 @@ export const CloudRitualGlow: FC = () => {
         {/* 4-Column Feature Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mt-12 mb-10 w-full text-left">
           {features.map((feat, i) => (
-            <div key={i} className="flex flex-col items-start cursor-heart group/feat">
+            <div 
+              key={i} 
+              onClick={() => handleFeatureClick(i)}
+              className="flex flex-col items-start cursor-heart group/feat"
+            >
               {/* Feature Icon Wrapper with relative center and Heart Burst overlay */}
               <div className="text-white/90 mb-3 relative w-8 h-8 flex items-center justify-start">
-                <div className="transform transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] group-hover/feat:scale-125">
+                <div className={`transform transition-all duration-300 ease-[cubic-bezier(0.3,0,0,1)] group-hover/feat:scale-125 ${activeFeatureIndex === i ? "scale-125" : ""}`}>
                   {feat.icon}
                 </div>
                 
                 {/* Exploding Burst Mini Hearts (Instagram style) */}
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/feat:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/feat:animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeFeatureIndex === i ? "animate-[popLove1_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/feat:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/feat:animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeFeatureIndex === i ? "animate-[popLove2_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/feat:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/feat:animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeFeatureIndex === i ? "animate-[popLove3_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/feat:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/feat:animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeFeatureIndex === i ? "animate-[popLove4_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/feat:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3.5 h-3.5 text-[#FAF6F0] opacity-0 pointer-events-none group-hover/feat:animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeFeatureIndex === i ? "animate-[popLove5_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/feat:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]">
+                <svg viewBox="0 0 24 24" fill="currentColor" className={`absolute top-1/2 left-1/2 w-3 h-3 text-[#E2C2C8] opacity-0 pointer-events-none group-hover/feat:animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards] ${activeFeatureIndex === i ? "animate-[popLove6_0.6s_cubic-bezier(0.3,0,0,1)_forwards]" : ""}`}>
                   <path d="M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z" />
                 </svg>
               </div>
