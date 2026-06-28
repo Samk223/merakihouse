@@ -1,0 +1,57 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Dependencies (rebuilt in container)
+vendor
+node_modules
+
+# Environment files (set via Render dashboard)
+.env
+.env.*
+
+# IDE / Editor
+.idea
+.vscode
+*.suo
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Testing
+tests
+phpunit.xml
+.phpunit.cache
+.phpunit.result.cache
+
+# Development tools
+.editorconfig
+README.md
+
+# AI Agent folders
+.agents
+.gemini
+.cursor
+.copilot
+.aider
+.claude
+brain
+.antigravity
+
+# Laravel development artifacts
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+# Node / Frontend (not needed for API)
+package.json
+package-lock.json
+vite.config.js
+resources/js
+resources/css
+public/build
+public/hot
