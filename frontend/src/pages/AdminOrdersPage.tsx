@@ -268,7 +268,7 @@ export const AdminOrdersPage = () => {
             return (
               <div
                 key={order.id}
-                className={`border rounded-[20px] overflow-hidden bg-white transition-all duration-300 ${
+                className={`border rounded-[20px] bg-white transition-all duration-300 ${
                   isExpanded ? "border-[#9D6C76]/30 shadow-[0_4px_20px_rgba(40,39,63,0.015)]" : "border-[#28273F]/5"
                 }`}
               >
@@ -356,7 +356,7 @@ export const AdminOrdersPage = () => {
 
                 {/* Expanded items breakdown */}
                 {isExpanded && (
-                  <div className="border-t border-[#28273F]/5 bg-[#FAF8F5]/25 p-5 md:p-6 space-y-5">
+                  <div className="border-t border-[#28273F]/5 bg-[#FAF8F5]/25 p-5 md:p-6 space-y-5 rounded-b-[20px]">
                     {detailLoading && !orderDetails[order.id] ? (
                       <div className="flex justify-center py-6">
                         <Loader2 className="w-6 h-6 animate-spin text-[#9D6C76]" />
