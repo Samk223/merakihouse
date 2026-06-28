@@ -106,6 +106,7 @@ export const HelpPage = () => {
         // Eager loaded ticket contains conversation
         const detail = response.data.data;
         setTicketMessages(detail.conversation || []);
+        setActiveTicket(detail);
       }
     } catch (err) {
       console.error("Failed to load ticket replies:", err);
