@@ -106,6 +106,9 @@ export const SignupPage = () => {
               </label>
               <input
                 type="text"
+                name="name"
+                id="name"
+                autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="please enter Your Name"
@@ -121,6 +124,9 @@ export const SignupPage = () => {
               </label>
               <input
                 type="email"
+                name="email"
+                id="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
@@ -137,6 +143,9 @@ export const SignupPage = () => {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Minimum 8 characters"
