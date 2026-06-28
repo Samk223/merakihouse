@@ -399,7 +399,7 @@ export const CategoryPage = () => {
           <img
             src={categoryDetails.banner}
             alt={categoryDetails.title}
-            className="w-full h-full object-cover category-hero-banner-img"
+            className="w-full h-full object-cover category-hero-banner-img !w-full !h-full !max-w-none"
           />
         </div>
 
