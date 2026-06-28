@@ -61,10 +61,13 @@ export const AdminOrdersPage = () => {
   const [detailLoading, setDetailLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
 
-  // Filters State
   const [statusFilter, setStatusFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
+
+  // Custom Dropdowns State
+  const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
+  const [openStatusDropdownOrderId, setOpenStatusDropdownOrderId] = useState<number | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -201,24 +204,51 @@ export const AdminOrdersPage = () => {
           <Search className="w-3.5 h-3.5 text-[#9D6C76] absolute left-4 top-1/2 -translate-y-1/2" />
         </div>
 
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          style={{
-            backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%239D6C76' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'><path d='m6 9 6 6 6-6'/></svg>")`,
-            paddingLeft: "16px",
-            paddingRight: "36px"
-          }}
-          className="appearance-none bg-no-repeat bg-[right_14px_center] bg-[size:10px] px-3.5 py-2.5 bg-[#FAF8F5] border border-[#28273F]/10 rounded-[9999px] font-body text-xs text-[#28273F] font-semibold focus:outline-none focus:border-[#9D6C76] focus:ring-1 focus:ring-[#9D6C76]/30 transition-all duration-300 cursor-pointer"
-        >
-          <option value="">All Statuses</option>
-          <option value="Pending">Pending</option>
-          <option value="Processing">Processing</option>
-          <option value="Packed">Packed</option>
-          <option value="Shipped">Shipped</option>
-          <option value="Delivered">Delivered</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
+        {/* Custom Status Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setIsFilterDropdownOpen(!isFilterDropdownOpen)}
+            className="flex items-center justify-between min-w-[160px] px-5 py-2.5 bg-[#FAF8F5] border border-[#28273F]/10 rounded-[9999px] font-body text-xs text-[#28273F] font-semibold hover:border-[#9D6C76] focus:outline-none focus:ring-1 focus:ring-[#9D6C76]/30 transition-all duration-300 cursor-pointer select-none"
+          >
+            <span>{statusFilter || "All Statuses"}</span>
+            <ChevronDown className={`w-3.5 h-3.5 text-[#9D6C76] ml-2.5 transition-transform duration-300 ${isFilterDropdownOpen ? 'rotate-180' : ''}`} />
+          </button>
+          
+          {isFilterDropdownOpen && (
+            <>
+              {/* Overlay Backdrop to close when clicking outside */}
+              <div className="fixed inset-0 z-30" onClick={() => setIsFilterDropdownOpen(false)} />
+              <div className="absolute right-0 md:left-0 md:right-auto mt-2 w-48 bg-white border border-[#28273F]/5 rounded-[16px] shadow-[0_8px_30px_rgba(40,39,63,0.08)] p-2 z-40 animate-fade-in">
+                {[
+                  { label: "All Statuses", value: "" },
+                  { label: "Pending", value: "Pending" },
+                  { label: "Processing", value: "Processing" },
+                  { label: "Packed", value: "Packed" },
+                  { label: "Shipped", value: "Shipped" },
+                  { label: "Delivered", value: "Delivered" },
+                  { label: "Cancelled", value: "Cancelled" }
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => {
+                      setStatusFilter(opt.value);
+                      setIsFilterDropdownOpen(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-[8px] font-body text-xs transition-colors duration-150 ${
+                      statusFilter === opt.value
+                        ? "bg-[#9D6C76]/10 text-[#9D6C76] font-semibold"
+                        : "text-[#28273F] hover:bg-[#FAF8F5]"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Orders List */}
@@ -270,19 +300,46 @@ export const AdminOrdersPage = () => {
                     </div>
 
                     {/* Quick status selector */}
-                    <select
-                      value={order.status}
-                      disabled={updatingId === order.id}
-                      onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                      className="px-2.5 py-1.5 bg-[#FAF8F5] border border-[#28273F]/10 rounded-[8px] font-body text-[10px] text-[#28273F] focus:outline-none cursor-pointer"
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Processing">Processing</option>
-                      <option value="Packed">Packed</option>
-                      <option value="Shipped">Shipped</option>
-                      <option value="Delivered">Delivered</option>
-                      <option value="Cancelled">Cancelled</option>
-                    </select>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        disabled={updatingId === order.id}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenStatusDropdownOrderId(openStatusDropdownOrderId === order.id ? null : order.id);
+                        }}
+                        className="flex items-center justify-between min-w-[120px] px-3 py-1.5 bg-[#FAF8F5] border border-[#28273F]/10 rounded-[8px] font-body text-[10px] text-[#28273F] font-medium hover:border-[#9D6C76] focus:outline-none transition-all duration-300 cursor-pointer disabled:opacity-50"
+                      >
+                        <span>{order.status}</span>
+                        <ChevronDown className={`w-3 h-3 text-[#9D6C76] ml-2 transition-transform duration-300 ${openStatusDropdownOrderId === order.id ? 'rotate-180' : ''}`} />
+                      </button>
+                      
+                      {openStatusDropdownOrderId === order.id && (
+                        <>
+                          <div className="fixed inset-0 z-30" onClick={(e) => { e.stopPropagation(); setOpenStatusDropdownOrderId(null); }} />
+                          <div className="absolute right-0 mt-1 w-36 bg-white border border-[#28273F]/5 rounded-[12px] shadow-[0_8px_30px_rgba(40,39,63,0.08)] p-1.5 z-40 animate-fade-in">
+                            {["Pending", "Processing", "Packed", "Shipped", "Delivered", "Cancelled"].map((status) => (
+                              <button
+                                key={status}
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleStatusChange(order.id, status);
+                                  setOpenStatusDropdownOrderId(null);
+                                }}
+                                className={`w-full text-left px-2.5 py-1.5 rounded-[6px] font-body text-[10px] transition-colors duration-150 ${
+                                  order.status === status
+                                    ? "bg-[#9D6C76]/10 text-[#9D6C76] font-semibold"
+                                    : "text-[#28273F] hover:bg-[#FAF8F5]"
+                                }`}
+                              >
+                                {status}
+                              </button>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
 
                     <button
                       onClick={() => handleToggleExpand(order.id)}
