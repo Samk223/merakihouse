@@ -182,10 +182,19 @@ export const HelpPage = () => {
   };
 
   const getStatusBadgeClass = (status: string) => {
-    if (status === "open") {
-      return "bg-[#10B981]/15 text-[#10B981]";
+    switch (status?.toLowerCase()) {
+      case "open":
+        return "bg-[#10B981]/10 text-[#10B981]";
+      case "assigned":
+        return "bg-[#3B82F6]/10 text-[#3B82F6]";
+      case "in_progress":
+      case "in progress":
+        return "bg-[#B98EA7]/15 text-[#B98EA7]";
+      case "resolved":
+        return "bg-[#10B981]/25 text-[#10B981]";
+      default:
+        return "bg-[#666666]/10 text-[#666666]";
     }
-    return "bg-[#28273F]/10 text-[#28273F]/60";
   };
 
   return (
@@ -268,7 +277,7 @@ export const HelpPage = () => {
           </div>
 
           {/* Reply form box */}
-          {activeTicket.status === "open" ? (
+          {["open", "assigned", "in_progress", "in progress"].includes(activeTicket.status.toLowerCase()) ? (
             <form onSubmit={handleSendReply} className="flex gap-3">
               <input
                 type="text"
@@ -294,7 +303,9 @@ export const HelpPage = () => {
           ) : (
             <div className="p-4 bg-[#28273F]/5 border border-[#28273F]/10 rounded-[16px] text-center font-body text-xs text-[#666666]">
               <CheckCircle className="w-5 h-5 text-[#28273F]/40 mx-auto mb-1.5" />
-              This support ticket has been closed and resolved.
+              {activeTicket.status.toLowerCase() === "resolved"
+                ? "This support ticket has been resolved."
+                : "This support ticket has been closed."}
             </div>
           )}
         </div>

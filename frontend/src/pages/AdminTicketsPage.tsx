@@ -61,6 +61,10 @@ export const AdminTicketsPage = () => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("");
+
+  // Custom Dropdowns State
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
+  const [isPriorityDropdownOpen, setIsPriorityDropdownOpen] = useState(false);
   
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
@@ -261,29 +265,101 @@ export const AdminTicketsPage = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-2.5 py-1.5 bg-[#FAF8F5] border border-[#28273F]/10 rounded-[10px] font-body text-[10px] text-[#28273F] focus:outline-none"
-              >
-                <option value="">All Statuses</option>
-                <option value="open">Open</option>
-                <option value="assigned">Assigned</option>
-                <option value="in_progress">In Progress</option>
-                <option value="resolved">Resolved</option>
-                <option value="closed">Closed</option>
-              </select>
+              {/* Status filter dropdown */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsStatusDropdownOpen(!isStatusDropdownOpen);
+                    setIsPriorityDropdownOpen(false);
+                  }}
+                  className="flex items-center justify-between w-full px-2.5 py-1.5 bg-[#FAF8F5] border border-[#28273F]/10 rounded-[10px] font-body text-[10px] text-[#28273F] font-semibold hover:border-[#9D6C76] focus:outline-none transition-all duration-300 cursor-pointer select-none"
+                >
+                  <span className="truncate">
+                    {statusFilter ? statusFilter.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase()) : "All Statuses"}
+                  </span>
+                  <ChevronDown className={`w-3 h-3 text-[#9D6C76] shrink-0 ml-1 transition-transform duration-300 ${isStatusDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
 
-              <select
-                value={priorityFilter}
-                onChange={(e) => setPriorityFilter(e.target.value)}
-                className="px-2.5 py-1.5 bg-[#FAF8F5] border border-[#28273F]/10 rounded-[10px] font-body text-[10px] text-[#28273F] focus:outline-none"
-              >
-                <option value="">All Priorities</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
+                {isStatusDropdownOpen && (
+                  <>
+                    <div className="fixed inset-0 z-30" onClick={() => setIsStatusDropdownOpen(false)} />
+                    <div className="absolute left-0 mt-1 w-36 bg-white border border-[#28273F]/5 rounded-[12px] shadow-[0_8px_30px_rgba(40,39,63,0.08)] p-1.5 z-40 animate-fade-in">
+                      {[
+                        { label: "All Statuses", value: "" },
+                        { label: "Open", value: "open" },
+                        { label: "Assigned", value: "assigned" },
+                        { label: "In Progress", value: "in_progress" },
+                        { label: "Resolved", value: "resolved" },
+                        { label: "Closed", value: "closed" }
+                      ].map((opt) => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => {
+                            setStatusFilter(opt.value);
+                            setIsStatusDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-2 py-1 rounded-[6px] font-body text-[10px] transition-colors duration-150 ${
+                            statusFilter === opt.value
+                              ? "bg-[#9D6C76]/10 text-[#9D6C76] font-semibold"
+                              : "text-[#28273F] hover:bg-[#FAF8F5]"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Priority filter dropdown */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsPriorityDropdownOpen(!isPriorityDropdownOpen);
+                    setIsStatusDropdownOpen(false);
+                  }}
+                  className="flex items-center justify-between w-full px-2.5 py-1.5 bg-[#FAF8F5] border border-[#28273F]/10 rounded-[10px] font-body text-[10px] text-[#28273F] font-semibold hover:border-[#9D6C76] focus:outline-none transition-all duration-300 cursor-pointer select-none"
+                >
+                  <span className="truncate">
+                    {priorityFilter ? priorityFilter.charAt(0).toUpperCase() + priorityFilter.slice(1) : "All Priorities"}
+                  </span>
+                  <ChevronDown className={`w-3 h-3 text-[#9D6C76] shrink-0 ml-1 transition-transform duration-300 ${isPriorityDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {isPriorityDropdownOpen && (
+                  <>
+                    <div className="fixed inset-0 z-30" onClick={() => setIsPriorityDropdownOpen(false)} />
+                    <div className="absolute right-0 mt-1 w-36 bg-white border border-[#28273F]/5 rounded-[12px] shadow-[0_8px_30px_rgba(40,39,63,0.08)] p-1.5 z-40 animate-fade-in">
+                      {[
+                        { label: "All Priorities", value: "" },
+                        { label: "Low", value: "low" },
+                        { label: "Medium", value: "medium" },
+                        { label: "High", value: "high" }
+                      ].map((opt) => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => {
+                            setPriorityFilter(opt.value);
+                            setIsPriorityDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-2 py-1 rounded-[6px] font-body text-[10px] transition-colors duration-150 ${
+                            priorityFilter === opt.value
+                              ? "bg-[#9D6C76]/10 text-[#9D6C76] font-semibold"
+                              : "text-[#28273F] hover:bg-[#FAF8F5]"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
