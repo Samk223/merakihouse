@@ -38,6 +38,12 @@ class Product extends Model
         'product_type',
     ];
 
+    protected $appends = [
+        'is_featured',
+        'is_best_seller',
+        'is_new_arrival',
+    ];
+
     protected $casts = [
         'price' => 'decimal:2',
         'discount_price' => 'decimal:2',
@@ -47,10 +53,44 @@ class Product extends Model
         'low_stock_threshold' => 'integer',
         'gst_percentage' => 'integer',
         'featured' => 'boolean',
+        'best_seller' => 'boolean',
+        'new_arrival' => 'boolean',
         'is_active' => 'boolean',
         'track_inventory' => 'boolean',
         'weight' => 'decimal:2',
     ];
+
+    // Accessors
+    public function getIsFeaturedAttribute(): bool
+    {
+        return (bool) $this->featured;
+    }
+
+    public function getIsBestSellerAttribute(): bool
+    {
+        return (bool) ($this->best_seller ?? false);
+    }
+
+    public function getIsNewArrivalAttribute(): bool
+    {
+        return (bool) ($this->new_arrival ?? false);
+    }
+
+    // Mutators
+    public function setIsFeaturedAttribute($value): void
+    {
+        $this->attributes['featured'] = (bool) $value;
+    }
+
+    public function setIsBestSellerAttribute($value): void
+    {
+        $this->attributes['best_seller'] = (bool) $value;
+    }
+
+    public function setIsNewArrivalAttribute($value): void
+    {
+        $this->attributes['new_arrival'] = (bool) $value;
+    }
 
     public function category(): BelongsTo
     {

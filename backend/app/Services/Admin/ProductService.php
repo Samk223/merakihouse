@@ -92,10 +92,9 @@ class ProductService
                 'gst_percentage' => $data['gst_percentage'] ?? 18,
                 'stock' => $data['stock'],
                 'low_stock_threshold' => $data['low_stock_threshold'] ?? 5,
-                'featured' => $data['featured'] ?? ($data['is_featured'] ?? false),
-                'is_featured' => $data['is_featured'] ?? ($data['featured'] ?? false),
-                'is_best_seller' => $data['is_best_seller'] ?? false,
-                'is_new_arrival' => $data['is_new_arrival'] ?? false,
+                'featured' => $data['is_featured'] ?? ($data['featured'] ?? false),
+                'best_seller' => $data['is_best_seller'] ?? ($data['best_seller'] ?? false),
+                'new_arrival' => $data['is_new_arrival'] ?? ($data['new_arrival'] ?? false),
                 'is_active' => $data['is_active'] ?? true,
                 'weight' => $data['weight'] ?? null,
                 'dimensions' => $data['dimensions'] ?? null,
@@ -133,18 +132,19 @@ class ProductService
 
             foreach ([
                 'category_id',
-                'description',
+                'name',
+                'slug',
+                'sku',
                 'short_description',
-                'brand',
+                'description',
                 'price',
                 'discount_price',
                 'gst_percentage',
                 'stock',
                 'low_stock_threshold',
                 'featured',
-                'is_featured',
-                'is_best_seller',
-                'is_new_arrival',
+                'best_seller',
+                'new_arrival',
                 'is_active',
                 'weight',
                 'dimensions',
@@ -157,10 +157,14 @@ class ProductService
                 }
             }
 
-            if (array_key_exists('is_featured', $productData)) {
-                $productData['featured'] = $productData['is_featured'];
-            } elseif (array_key_exists('featured', $productData)) {
-                $productData['is_featured'] = $productData['featured'];
+            if (array_key_exists('is_featured', $data)) {
+                $productData['featured'] = $data['is_featured'];
+            }
+            if (array_key_exists('is_best_seller', $data)) {
+                $productData['best_seller'] = $data['is_best_seller'];
+            }
+            if (array_key_exists('is_new_arrival', $data)) {
+                $productData['new_arrival'] = $data['is_new_arrival'];
             }
 
             $product->update($productData);
