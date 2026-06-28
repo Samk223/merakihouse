@@ -428,7 +428,7 @@ export const AdminTicketsPage = () => {
         {/* Right Side: Conversation Viewer & Workspace */}
         <div className="flex-grow bg-white border border-[#28273F]/5 rounded-[24px] flex flex-col shadow-[0_8px_30px_rgba(40,39,63,0.005)] overflow-hidden min-w-0">
           {!activeTicket ? (
-            <div className="flex-grow flex flex-col items-center justify-center p-8 text-center text-[#666666] font-body max-w-md mx-auto">
+            <div className="flex-grow flex flex-col items-center justify-center p-8 text-center text-[#666666] font-body w-full max-w-md mx-auto">
               <MessageSquare className="w-12 h-12 text-[#28273F]/10 mb-4" />
               <h3 className="font-heading text-base text-[#28273F] mb-1">No Ticket Selected</h3>
               <p className="text-xs font-light leading-relaxed">
