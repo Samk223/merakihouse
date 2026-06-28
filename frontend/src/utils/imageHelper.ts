@@ -1,13 +1,17 @@
 export const resolveImageUrl = (path?: string) => {
   if (!path) return "";
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+  const apiHost = apiUrl.endsWith("/api") ? apiUrl.slice(0, -4) : apiUrl;
+
   if (path.startsWith("/storage/") || path.startsWith("storage/")) {
     const clean = path.startsWith("/") ? path : `/${path}`;
-    return `http://localhost:8000${clean}`;
+    return `${apiHost}${clean}`;
   }
   if (path.startsWith("/uploads/") || path.startsWith("uploads/")) {
     const clean = path.startsWith("/") ? path : `/${path}`;
-    return `http://localhost:8000${clean}`;
+    return `${apiHost}${clean}`;
   }
   return path;
 };
