@@ -1,0 +1,45 @@
+/* Container Utilities */
+.container-sm {
+  width: min(var(--container-sm), 92%);
+  margin-inline: auto;
+}
+
+.container-md {
+  width: min(var(--container-md), 92%);
+  margin-inline: auto;
+}
+
+.container-lg {
+  width: min(var(--container-lg), 92%);
+  margin-inline: auto;
+}
+
+.container-xl {
+  width: min(var(--container-xl), 92%);
+  margin-inline: auto;
+}
+
+.container-full {
+  width: 100%;
+}
+
+.container-custom {
+  width: min(var(--container-max), 92%);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section-padding);
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+.rounded-large {
+  border-radius: var(--radius-lg);
+}
+
+.rounded-xl {
+  border-radius: var(--radius-xl);
+}

@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Requests\Api\Customer;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreSupportTicketRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     */
+    public function rules(): array
+    {
+        return [
+            'subject' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:100'],
+            'priority' => ['required', 'string', 'in:low,medium,high'],
+            'message' => ['nullable', 'required_without:media', 'string'],
+            'media' => ['sometimes', 'array', 'max:' . config('commerce.media.max_files', 5)],
+            'media.*.type' => ['required_with:media', 'string', 'in:' . implode(',', config('commerce.media_types', ['image', 'video']))],
+            'media.*.path' => ['required_with:media', 'string', 'max:255'],
+            'media.*.mime_type' => ['nullable', 'string', 'in:' . implode(',', config('commerce.media.allowed_mime_types', ['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'application/pdf']))],
+            'media.*.display_order' => ['sometimes', 'integer', 'min:0'],
+        ];
+    }
+}

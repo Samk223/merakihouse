@@ -1,0 +1,142 @@
+:root {
+  /* Transition Easings */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Semantic Easing Curves */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  
+  /* Transition Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  
+  /* Reusable Transition Combinations */
+  --transition-fast: var(--duration-fast) var(--ease-standard);
+  --transition-normal: var(--duration-normal) var(--ease-standard);
+  --transition-slow: var(--duration-slow) var(--ease-standard);
+  
+  --transition-button: all var(--duration-fast) var(--ease-standard);
+  --transition-card: all var(--duration-normal) var(--ease-emphasized);
+  --transition-modal: transform var(--duration-normal) var(--ease-emphasized), opacity var(--duration-normal) var(--ease-standard);
+  --transition-drawer: transform var(--duration-slow) var(--ease-emphasized);
+}
+
+/* Animations and Transitions Helper Classes */
+.transition-fast { transition: var(--transition-fast); }
+.transition-normal { transition: var(--transition-normal); }
+.transition-slow { transition: var(--transition-slow); }
+.transition-button { transition: var(--transition-button); }
+.transition-card { transition: var(--transition-card); }
+.transition-modal { transition: var(--transition-modal); }
+.transition-drawer { transition: var(--transition-drawer); }
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pageTransition {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) var(--ease-standard) forwards;
+}
+
+.animate-fade-up {
+  animation: fadeUp var(--duration-normal) var(--ease-emphasized) forwards;
+}
+
+.animate-fade-down {
+  animation: fadeDown var(--duration-normal) var(--ease-emphasized) forwards;
+}
+
+.animate-scale {
+  animation: scaleUp var(--duration-normal) var(--ease-emphasized) forwards;
+}
+
+.animate-page {
+  animation: pageTransition var(--duration-slow) var(--ease-emphasized) forwards;
+}
+
+/* Micro-interaction Utilities */
+.hover-lift {
+  transition: var(--transition-card);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+.button-press {
+  transition: transform 0.1s var(--ease-standard);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .button-press:active {
+    transform: scale(0.96);
+  }
+}
+
+/* Prefers Reduced Motion override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}

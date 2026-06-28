@@ -1,0 +1,170 @@
+/* Box-sizing rules & general resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Enforce lining numerals for all numbers on the website to keep digits aligned on a single baseline */
+html, body, span, p, div, h1, h2, h3, h4, h5, h6, a, button, select, input, textarea {
+  font-variant-numeric: lining-nums !important;
+  font-feature-settings: "lnum" 1 !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--color-background);
+  line-height: var(--text-body-lh);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Custom Selection Color */
+::selection {
+  background-color: var(--color-primary-light);
+  color: var(--color-white);
+}
+::-moz-selection {
+  background-color: var(--color-primary-light);
+  color: var(--color-white);
+}
+
+/* Keyboard Access Focus Visible ring */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* Subtle Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C597A0 #FAF8F5;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C597A0;
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9D6C76;
+}
+
+/* Images & media */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Hyperlinks */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-in-out);
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+/* Stateless Button Reset */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  outline: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Form Controls Reset */
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-in-out), box-shadow var(--duration-fast) var(--ease-in-out);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Custom Cute Heart Cursor */
+.cursor-heart {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%239D6C76' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M12 21C12 21 3.5 14 3.5 8.5C3.5 5.5 6 3 9 3C10.8 3 11.5 4.2 12 5C12.5 4.2 13.2 3 15 3C18 3 20.5 5.5 20.5 8.5C20.5 14 12 21 12 21Z'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+/* Custom Serum Dropper Cursor */
+.cursor-serum {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23ffffff' stroke='%239D6C76' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 20 L7 23 C6.5 23.5 6.5 24.5 7 25 C7.5 25.5 8.5 25.5 9 25 L12 22'/%3E%3Cpath d='M11 19 L19 11 M13 21 L21 13'/%3E%3Cpath d='M20 10 L22 12 C23 11 25 11 26 10 C27 9 27 7 26 6 L25 5 C24 4 22 4 21 5 C20 6 20 8 20 10 Z'/%3E%3Cpath d='M5 28 C5 26.5 6 25 7 25 C8 25 9 26.5 9 28 C9 29 8 30 7 30 C6 30 5 29 5 28 Z'/%3E%3C/svg%3E") 7 28, auto;
+}
+
+/* Custom Butter Block Cursor */
+.cursor-butter {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23ffffff' stroke='%239D6C76' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 16 L20 12 L26 17 L12 21 Z'/%3E%3Cpath d='M6 16 V24 L12 28 V21 Z'/%3E%3Cpath d='M12 21 L12 28 L26 24 V17 Z'/%3E%3Cpath d='M13 15 C11 11%2C 15 8%2C 17 11 C18 13%2C 16 15%2C 14 15 Z' fill='%23C597A0'/%3E%3Cpath d='M16 11 C15 7%2C 18 5%2C 20 8 C21 10%2C 19 11%2C 17 11 Z' fill='%23FAF6F0'/%3E%3C/svg%3E") 16 16, auto;
+}
+
+/* Custom Oil Drops Cursor */
+.cursor-oil {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23ffffff' stroke='%239D6C76' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 24 C10 24%2C 4 20%2C 4 15 C4 11%2C 7 8%2C 10 8 C13 8%2C 16 11%2C 16 15 C16 20%2C 10 24%2C 10 24 Z'/%3E%3Cpath d='M16 8 C16 8%2C 13 6%2C 13 4 C13 2.5%2C 14 1.5%2C 16 1.5 C18 1.5%2C 19 2.5%2C 19 4 C19 6%2C 16 8%2C 16 8 Z'/%3E%3Ccircle cx='23' cy='18' r='2' fill='%23C597A0'/%3E%3Ccircle cx='23' cy='14' r='2'/%3E%3Ccircle cx='23' cy='22' r='2'/%3E%3Ccircle cx='19' cy='18' r='2'/%3E%3Ccircle cx='27' cy='18' r='2'/%3E%3Ccircle cx='20' cy='15' r='2'/%3E%3Ccircle cx='26' cy='21' r='2'/%3E%3Ccircle cx='20' cy='21' r='2'/%3E%3Ccircle cx='26' cy='15' r='2'/%3E%3C/svg%3E") 10 8, auto;
+}
+
+/* Custom Spray Bottle Cursor */
+.cursor-spray {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23ffffff' stroke='%239D6C76' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 12 C11 12%2C 11 9%2C 16 9 C21 9%2C 21 12%2C 21 12 V28 H11 Z'/%3E%3Cpath d='M14 9 V5 H18 V9 Z'/%3E%3Cpath d='M14 6 H12'/%3E%3Ccircle cx='16' cy='18' r='1.5' fill='%23C597A0'/%3E%3Ccircle cx='16' cy='15.5' r='1.2'/%3E%3Ccircle cx='16' cy='20.5' r='1.2'/%3E%3Ccircle cx='13.5' cy='18' r='1.2'/%3E%3Ccircle cx='18.5' cy='18' r='1.2'/%3E%3Ccircle cx='6' cy='5' r='0.8' fill='%239D6C76' stroke='none'/%3E%3Ccircle cx='8' cy='7' r='0.8' fill='%239D6C76' stroke='none'/%3E%3Ccircle cx='5' cy='8' r='0.8' fill='%239D6C76' stroke='none'/%3E%3C/svg%3E") 14 5, auto;
+}
+
+/* Custom Cloud Cursor (Multi-bubble line-art style) */
+.cursor-cloud {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='%23ffffff' stroke='%239D6C76' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21a3 3 0 0 1 6 0a3 3 0 0 1-6 0z'/%3E%3Cpath d='M8 20a4 4 0 0 1 0-8a5.5 5.5 0 0 1 10-2a5 5 0 0 1 6 4a3.5 3.5 0 0 1 0 7z'/%3E%3Cpath d='M14 11a3 3 0 0 1 5-2.5a3 3 0 0 1 1 2.5'/%3E%3C/svg%3E") 15 15, auto;
+}
+
+/* Custom Celebration (Ribbons & Stars) Cursor */
+.cursor-celebration {
+  cursor: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M6 6 L7 8 L9 9 L7 10 L6 12 L5 10 L3 9 L5 8 Z' fill='%23E1B057'/%3E%3Cpath d='M22 8 L23 10 L25 11 L23 12 L22 14 L21 12 L19 11 L21 10 Z' fill='%23C597A0'/%3E%3Cpath d='M10 20 Q12 18 14 22 T18 20' stroke='%239D6C76' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M18 22 Q20 25 22 21 T26 23' stroke='%230E7C7B' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='12' cy='10' r='1.5' fill='%239D6C76'/%3E%3C/svg%3E") 16 16, auto;
+}
